@@ -8,42 +8,43 @@
   :root {
     --bg: #0f1115;
     --panel: #171a21;
+    --panel-border: #22262f;
     --text: #e6e8eb;
     --muted: #8b93a1;
     --accent: #5eb3ff;
     --danger: #ff6b6b;
+    --verde: #4ade80;
+    --arancione: #fb923c;
+    --rosso: #f87171;
+  }
+  html[data-theme="chiaro"] {
+    --bg: #f5f6f8;
+    --panel: #ffffff;
+    --panel-border: #e5e7eb;
+    --text: #1a1d23;
+    --muted: #6b7280;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    padding: 40px 20px;
+    padding: 24px 16px 60px;
     background: var(--bg);
     color: var(--text);
     font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    transition: background 0.3s, color 0.3s;
   }
-  .wrap { max-width: 640px; margin: 0 auto; }
-  h1 { font-size: 22px; font-weight: 600; margin: 0 0 4px; }
-  .sub { color: var(--muted); font-size: 14px; margin-bottom: 28px; }
-  .status { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
-  .row {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 16px;
-    background: var(--panel);
-    border-radius: 8px;
-    margin-bottom: 8px;
-    font-size: 14px;
-  }
-  .row .dur { color: var(--accent); font-variant-numeric: tabular-nums; }
+  .wrap { max-width: 480px; margin: 0 auto; }
 
   .login-screen {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 60vh;
+    min-height: 70vh;
     text-align: center;
   }
+  h1 { font-size: 20px; font-weight: 700; margin: 0 0 4px; }
+  .sub { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
   .btn {
     display: inline-flex;
     align-items: center;
@@ -51,37 +52,62 @@
     padding: 12px 20px;
     background: var(--panel);
     color: var(--text);
-    border: 1px solid #2a2f3a;
+    border: 1px solid var(--panel-border);
     border-radius: 8px;
     font-size: 15px;
     cursor: pointer;
-    margin-top: 16px;
   }
   .btn:hover { border-color: var(--accent); }
-  .topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-  }
-  .user-chip {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: var(--muted);
-  }
-  .user-chip img { width: 24px; height: 24px; border-radius: 50%; }
-  .link-btn {
-    background: none;
-    border: none;
-    color: var(--muted);
-    font-size: 13px;
-    text-decoration: underline;
-    cursor: pointer;
-  }
   .denied { color: var(--danger); margin-top: 12px; font-size: 13px; }
   #app { display: none; }
+
+  .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .user-chip { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+  .user-chip img { width: 22px; height: 22px; border-radius: 50%; }
+  .icon-btn { background: none; border: none; color: var(--muted); font-size: 13px; cursor: pointer; padding: 4px 6px; }
+
+  .datenav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; gap: 8px; }
+  .datenav button.freccia {
+    background: var(--panel); border: 1px solid var(--panel-border); color: var(--text);
+    width: 34px; height: 34px; border-radius: 8px; cursor: pointer; font-size: 16px; flex-shrink: 0;
+  }
+  .data-info { text-align: center; flex: 1; }
+  .data-corrente { font-size: 15px; font-weight: 600; }
+  .oggi-btn { font-size: 12px; color: var(--accent); background: none; border: none; cursor: pointer; padding: 2px; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
+  .card { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 10px; padding: 12px 10px; text-align: center; }
+  .card .label { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+  .card .value { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  .chart-box { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 12px; padding: 16px 12px; margin-bottom: 16px; }
+  .chart-titolo { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+  .chart { display: flex; align-items: flex-end; gap: 8px; height: 140px; }
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; cursor: pointer; height: 100%; justify-content: flex-end; }
+  .bar-value { font-size: 10px; color: var(--muted); margin-bottom: 6px; font-variant-numeric: tabular-nums; }
+  .bar { width: 100%; max-width: 34px; border-radius: 6px 6px 3px 3px; transition: height 0.7s cubic-bezier(.22,1,.36,1); height: 2px; }
+  .bar-col.selezionato .bar { box-shadow: 0 0 0 2px var(--accent); }
+  .bar-col.selezionato .bar-value, .bar-col.selezionato .bar-label { color: var(--text); font-weight: 600; }
+  .bar-label { font-size: 10px; color: var(--muted); margin-top: 8px; }
+  .bar.verde { background: var(--verde); }
+  .bar.arancione { background: var(--arancione); }
+  .bar.rosso { background: var(--rosso); }
+  .bar.vuoto { background: var(--panel-border); }
+
+  .dettaglio { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 12px; padding: 6px 16px; margin-bottom: 16px; }
+  .dettaglio-riga { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--panel-border); font-size: 13px; }
+  .dettaglio-riga:last-child { border-bottom: none; }
+  .dettaglio-riga .val { color: var(--accent); font-variant-numeric: tabular-nums; }
+
+  .app-riga { display: flex; justify-content: space-between; padding: 9px 0; font-size: 13px; border-bottom: 1px solid var(--panel-border); }
+  .app-riga:last-child { border-bottom: none; }
+  .app-riga .val { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  .sezione-titolo { font-size: 13px; color: var(--muted); margin: 20px 0 10px; }
+  .vuoto-msg { color: var(--muted); font-size: 13px; text-align: center; padding: 30px 0; }
+
+  @keyframes comparsa { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .cards, .chart-box, .dettaglio { animation: comparsa 0.4s ease; }
 </style>
 </head>
 <body>
@@ -95,15 +121,41 @@
 
 <div class="wrap" id="app">
   <div class="topbar">
-    <h1 style="margin:0; font-size:18px;">Tracker Tempo</h1>
     <div class="user-chip">
       <img id="user-photo" src="" alt="">
       <span id="user-email"></span>
-      <button class="link-btn" id="logout-btn">Esci</button>
+    </div>
+    <div>
+      <button class="icon-btn" id="tema-btn">🌙</button>
+      <button class="icon-btn" id="logout-btn">Esci</button>
     </div>
   </div>
-  <div class="status" id="status">Caricamento...</div>
-  <div id="lista"></div>
+
+  <div class="datenav">
+    <button class="freccia" id="giorno-prec">‹</button>
+    <div class="data-info">
+      <div class="data-corrente" id="data-corrente">—</div>
+      <button class="oggi-btn" id="vai-oggi">Torna a oggi</button>
+    </div>
+    <button class="freccia" id="giorno-succ">›</button>
+  </div>
+
+  <div class="cards">
+    <div class="card"><div class="label">Oggi</div><div class="value" id="val-oggi">—</div></div>
+    <div class="card"><div class="label">Settimana</div><div class="value" id="val-settimana">—</div></div>
+    <div class="card"><div class="label">Mese</div><div class="value" id="val-mese">—</div></div>
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-titolo" id="chart-titolo">Questa settimana</div>
+    <div class="chart" id="chart"></div>
+  </div>
+
+  <div class="sezione-titolo" id="dettaglio-titolo">Dettaglio giornata</div>
+  <div class="dettaglio" id="dettaglio"></div>
+
+  <div class="sezione-titolo">Programmi più usati</div>
+  <div class="dettaglio" id="top-app"></div>
 </div>
 
 <script type="module">
@@ -138,10 +190,7 @@
       deniedMsg.style.display = "block";
     });
   });
-
-  document.getElementById("logout-btn").addEventListener("click", () => {
-    signOut(auth);
-  });
+  document.getElementById("logout-btn").addEventListener("click", () => signOut(auth));
 
   onAuthStateChanged(auth, (user) => {
     if (!user) {
@@ -149,7 +198,6 @@
       appScreen.style.display = "none";
       return;
     }
-
     if (user.email !== EMAIL_AUTORIZZATA) {
       deniedMsg.textContent = `Account "${user.email}" non autorizzato per questo sito.`;
       deniedMsg.style.display = "block";
@@ -158,45 +206,193 @@
       signOut(auth);
       return;
     }
-
     loginScreen.style.display = "none";
     appScreen.style.display = "block";
     document.getElementById("user-photo").src = user.photoURL || "";
     document.getElementById("user-email").textContent = user.email;
-    caricaDati();
+    avviaApp();
   });
 
-  function formattaDurata(sec) {
-    const m = Math.floor(sec / 60);
-    const s = sec % 60;
-    return m > 0 ? `${m}m ${s}s` : `${s}s`;
+  let tutteLeSessioni = [];
+  let dataSelezionata = new Date();
+  let temaScuro = true;
+
+  const NOMI_GIORNI = ["Dom","Lun","Mar","Mer","Gio","Ven","Sab"];
+  const NOMI_GIORNI_ESTESI = ["Domenica","Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato"];
+  const NOMI_MESI = ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
+
+  function stessoGiorno(a, b) {
+    return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
+  }
+  function inizioSettimana(d) {
+    const x = new Date(d);
+    const giorno = x.getDay();
+    const diff = x.getDate() - giorno + (giorno === 0 ? -6 : 1);
+    x.setDate(diff);
+    x.setHours(0,0,0,0);
+    return x;
+  }
+  function formattaDataBreve(d) {
+    const oggi = new Date();
+    if (stessoGiorno(d, oggi)) return "Oggi";
+    const ieri = new Date(oggi); ieri.setDate(ieri.getDate()-1);
+    if (stessoGiorno(d, ieri)) return "Ieri";
+    return `${NOMI_GIORNI_ESTESI[d.getDay()]} ${d.getDate()} ${NOMI_MESI[d.getMonth()]}`;
+  }
+  function formattaOre(secondi) {
+    if (!secondi) return "0min";
+    const ore = secondi / 3600;
+    if (ore < 1) return `${Math.round(secondi/60)}min`;
+    const h = Math.floor(ore);
+    const m = Math.round((ore - h) * 60);
+    return m > 0 ? `${h}h ${m}min` : `${h}h`;
+  }
+  function formattaOra(d) {
+    return d.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
   }
 
-  async function caricaDati() {
-    const status = document.getElementById("status");
-    const lista = document.getElementById("lista");
-    lista.innerHTML = "";
+  function sessioniDelGiorno(data) {
+    return tutteLeSessioni.filter(s => stessoGiorno(s.inizio, data));
+  }
+  function sessioniPeriodo(inizio, fine) {
+    return tutteLeSessioni.filter(s => s.inizio >= inizio && s.inizio < fine);
+  }
+  function secondiTotali(sessioni) {
+    return sessioni.reduce((tot, s) => tot + s.durata_secondi, 0);
+  }
+  function classeColore(secondi) {
+    const ore = secondi / 3600;
+    if (ore >= 8) return "rosso";
+    if (ore >= 5) return "arancione";
+    if (ore > 0) return "verde";
+    return "vuoto";
+  }
 
-    try {
-      const snapshot = await getDocs(collection(db, "sessioni"));
-
-      if (snapshot.empty) {
-        status.textContent = "Connesso, ma nessun dato trovato — hai fatto girare il tracker?";
-        return;
-      }
-
-      status.textContent = `Connesso — ${snapshot.size} sessioni trovate`;
-
-      snapshot.forEach((doc) => {
-        const d = doc.data();
-        const row = document.createElement("div");
-        row.className = "row";
-        row.innerHTML = `<span class="prog">${d.programma}</span><span class="dur">${formattaDurata(d.durata_secondi)}</span>`;
-        lista.appendChild(row);
+  async function caricaSessioni() {
+    const snapshot = await getDocs(collection(db, "sessioni"));
+    tutteLeSessioni = [];
+    snapshot.forEach((doc) => {
+      const d = doc.data();
+      tutteLeSessioni.push({
+        programma: d.programma,
+        inizio: d.inizio.toDate(),
+        fine: d.fine.toDate(),
+        durata_secondi: d.durata_secondi,
       });
-    } catch (err) {
-      status.textContent = "Errore di connessione: " + err.message;
+    });
+  }
+
+  function renderCards() {
+    const oggi = new Date();
+    const inizioSett = inizioSettimana(oggi);
+    const fineSett = new Date(inizioSett); fineSett.setDate(fineSett.getDate()+7);
+    const inizioMeseCorr = new Date(oggi.getFullYear(), oggi.getMonth(), 1);
+    const fineMeseCorr = new Date(oggi.getFullYear(), oggi.getMonth()+1, 1);
+
+    document.getElementById("val-oggi").textContent = formattaOre(secondiTotali(sessioniDelGiorno(oggi)));
+    document.getElementById("val-settimana").textContent = formattaOre(secondiTotali(sessioniPeriodo(inizioSett, fineSett)));
+    document.getElementById("val-mese").textContent = formattaOre(secondiTotali(sessioniPeriodo(inizioMeseCorr, fineMeseCorr)));
+  }
+
+  function renderChart() {
+    const inizioSett = inizioSettimana(dataSelezionata);
+    const chart = document.getElementById("chart");
+    chart.innerHTML = "";
+
+    const totaliGiorni = [];
+    for (let i = 0; i < 7; i++) {
+      const giorno = new Date(inizioSett); giorno.setDate(giorno.getDate()+i);
+      totaliGiorni.push({ giorno, secondi: secondiTotali(sessioniDelGiorno(giorno)) });
     }
+    const massimo = Math.max(...totaliGiorni.map(g => g.secondi), 3600);
+
+    totaliGiorni.forEach(({ giorno, secondi }) => {
+      const col = document.createElement("div");
+      col.className = "bar-col" + (stessoGiorno(giorno, dataSelezionata) ? " selezionato" : "");
+      const altezzaPerc = Math.max((secondi / massimo) * 100, secondi > 0 ? 4 : 1);
+      col.innerHTML = `
+        <div class="bar-value">${secondi > 0 ? formattaOre(secondi) : ""}</div>
+        <div class="bar ${classeColore(secondi)}" style="height:${altezzaPerc}%"></div>
+        <div class="bar-label">${NOMI_GIORNI[giorno.getDay()]} ${giorno.getDate()}</div>
+      `;
+      col.addEventListener("click", () => selezionaGiorno(giorno));
+      chart.appendChild(col);
+    });
+
+    const titolo = document.getElementById("chart-titolo");
+    const oggi = new Date();
+    titolo.textContent = stessoGiorno(inizioSett, inizioSettimana(oggi)) ? "Questa settimana" : `Settimana del ${inizioSett.getDate()} ${NOMI_MESI[inizioSett.getMonth()]}`;
+  }
+
+  function renderDettaglio() {
+    document.getElementById("data-corrente").textContent = formattaDataBreve(dataSelezionata);
+    document.getElementById("dettaglio-titolo").textContent = `Dettaglio — ${formattaDataBreve(dataSelezionata)}`;
+
+    const sessioni = sessioniDelGiorno(dataSelezionata);
+    const dettaglio = document.getElementById("dettaglio");
+    const topApp = document.getElementById("top-app");
+
+    if (sessioni.length === 0) {
+      dettaglio.innerHTML = `<div class="vuoto-msg">Nessuna attività registrata questo giorno</div>`;
+      topApp.innerHTML = "";
+      return;
+    }
+
+    const totale = secondiTotali(sessioni);
+    const inizi = sessioni.map(s => s.inizio.getTime());
+    const fini = sessioni.map(s => s.fine.getTime());
+    const primoAvvio = new Date(Math.min(...inizi));
+    const ultimoUtilizzo = new Date(Math.max(...fini));
+    const durataMedia = totale / sessioni.length;
+
+    dettaglio.innerHTML = `
+      <div class="dettaglio-riga"><span>Ore totali</span><span class="val">${formattaOre(totale)}</span></div>
+      <div class="dettaglio-riga"><span>Primo avvio</span><span class="val">${formattaOra(primoAvvio)}</span></div>
+      <div class="dettaglio-riga"><span>Ultimo utilizzo</span><span class="val">${formattaOra(ultimoUtilizzo)}</span></div>
+      <div class="dettaglio-riga"><span>Sessioni</span><span class="val">${sessioni.length}</span></div>
+      <div class="dettaglio-riga"><span>Durata media</span><span class="val">${formattaOre(durataMedia)}</span></div>
+    `;
+
+    const perProgramma = {};
+    sessioni.forEach(s => { perProgramma[s.programma] = (perProgramma[s.programma]||0) + s.durata_secondi; });
+    const top5 = Object.entries(perProgramma).sort((a,b)=>b[1]-a[1]).slice(0,5);
+
+    topApp.innerHTML = top5.map(([nome, sec]) =>
+      `<div class="app-riga"><span>${nome}</span><span class="val">${formattaOre(sec)}</span></div>`
+    ).join("");
+  }
+
+  function aggiornaTutto() {
+    renderCards();
+    renderChart();
+    renderDettaglio();
+  }
+
+  function selezionaGiorno(d) {
+    dataSelezionata = d;
+    aggiornaTutto();
+  }
+
+  document.getElementById("giorno-prec").addEventListener("click", () => {
+    const d = new Date(dataSelezionata); d.setDate(d.getDate()-1);
+    selezionaGiorno(d);
+  });
+  document.getElementById("giorno-succ").addEventListener("click", () => {
+    const d = new Date(dataSelezionata); d.setDate(d.getDate()+1);
+    selezionaGiorno(d);
+  });
+  document.getElementById("vai-oggi").addEventListener("click", () => selezionaGiorno(new Date()));
+
+  document.getElementById("tema-btn").addEventListener("click", () => {
+    temaScuro = !temaScuro;
+    document.documentElement.setAttribute("data-theme", temaScuro ? "scuro" : "chiaro");
+    document.getElementById("tema-btn").textContent = temaScuro ? "🌙" : "☀️";
+  });
+
+  async function avviaApp() {
+    document.getElementById("data-corrente").textContent = "Caricamento...";
+    await caricaSessioni();
+    aggiornaTutto();
   }
 </script>
 </body>
